@@ -1,16 +1,16 @@
-public class HourlyEmployee {
-    private String name;
-    private String id;
+package be.heh.payrollsystem.model;
+
+public class HourlyEmployee extends Employee{
+
     private double hourlyRate;
     private int hoursWorked;
 
     public HourlyEmployee(String name, String id, double hourlyRate, int hoursWorked) {
-        this.name = name;
-        this.id = id;
+        super(name, id);
         setHourlyRate(hourlyRate);
         setHoursWorked(hoursWorked);
     }
-
+    @Override
     public double calculatePay() {
         return hourlyRate * hoursWorked;
     }
