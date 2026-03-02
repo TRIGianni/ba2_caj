@@ -1,8 +1,6 @@
 package be.heh.payrollsystem.model;
 
-public abstract class Employee {
-
-
+public abstract class Employee implements Payable{
     private String name;
     private String id;
 

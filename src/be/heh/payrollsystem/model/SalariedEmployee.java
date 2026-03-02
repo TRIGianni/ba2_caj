@@ -12,6 +12,4 @@ public class SalariedEmployee extends Employee{
     public double calculatePay() {
         return this.monthlySalary;
     }
-
-
 }
