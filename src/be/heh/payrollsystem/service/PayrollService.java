@@ -15,8 +15,8 @@ public class PayrollService {
 
     public void processPayments(){
         for(Employee employee : employees){
-            System.out.println(employee.getName()+" gagne : "+ employee.calculatePay() + "euros");
-            pr.savePayment(employee.getId(), employee.getName(), employee.calculatePay());
+            System.out.println(employee.getName()+" gagne : "+ employee.getPay() + "euros");
+            pr.savePayment(employee.getId(), employee.getName(), employee.getPay());
         }
 
     }
