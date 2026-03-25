@@ -1,40 +1,57 @@
 package be.heh.payrollsystem;
 
+import be.heh.payrollsystem.factory.HourlyEmployeeFactory;
 import be.heh.payrollsystem.factory.SalariedEmployeeFactory;
-import be.heh.payrollsystem.model.Employee;
-import be.heh.payrollsystem.model.HourlyEmployee;
-import be.heh.payrollsystem.model.SalariedEmployee;
+import be.heh.payrollsystem.model.*;
 import be.heh.payrollsystem.persistance.FileRepository;
 import be.heh.payrollsystem.service.PayrollService;
+
+import java.util.ArrayList;
 
 public class PayrollSystem {
 
     public static void main(String[] args) {
         var professeurFactory = new SalariedEmployeeFactory(
-                "Gianni Tricarico",
-                "99",
                 3000
         );
-        Employee toto=
-                new HourlyEmployee("toto", "1234", 20, 8);
+
+        var intervenantFactory = new HourlyEmployeeFactory(
+                3000,0
+        );
 
         try {
-            // Création d'une armée
-            var trica1 = professeurFactory.createEmployee();
-            var trica2 = professeurFactory.createEmployee();
-            var trica3 = professeurFactory.createEmployee();
+            var trica = professeurFactory.createEmployee("Gianni Tricarico", "99");
+            var lucas = professeurFactory.createEmployee("Lucas Amand", "10");
+            var jospin = intervenantFactory.createEmployee("Lionel Jospin", "2025");
+            var electricien = intervenantFactory.createEmployee("L'électricien", "69420");
+            var allEmployees = new ArrayList<Employee>();
+            allEmployees.add(trica);
+            allEmployees.add(lucas);
+            allEmployees.add(jospin);
+            allEmployees.add(electricien);
 
-            System.out.printf("%s %s %s %n", trica1.getName(), trica2.getName(), trica3.getName());
-            Employee bob =
-                    new SalariedEmployee("bob","2345", 1500);
+            var contractTrica = professeurFactory.createContract(trica.getId());
+            var contractLucas = professeurFactory.createContract(lucas.getId());
+            var contractJospin = intervenantFactory.createContract(jospin.getId());
 
-            FileRepository fileRepository = new FileRepository();
-            PayrollService payrollService = new PayrollService(fileRepository);
-            payrollService.addEmployee(trica1);
-            payrollService.addEmployee(trica2);
-            payrollService.addEmployee(trica3);
+            var allContracts = new ArrayList<EmployementContract>();
+            allContracts.add(contractTrica);
+            allContracts.add(contractLucas);
+            allContracts.add(contractJospin);
 
-            payrollService.processPayments();
+            var fileRepository = new FileRepository();
+            var prs = new PayrollService(fileRepository);
+
+            for (var employee : allEmployees) {
+                prs.addEmployee(employee);
+                System.out.printf("Employé créé: %s payé %f %n", employee.getName(), employee.calculatePay());
+            }
+
+            for (var contract : allContracts) {
+                System.out.println(contract.getContractDetails());
+            }
+
+            prs.processPayments();
 
         } catch (Exception e) {
             System.out.println("Erreur : " + e.getMessage());
