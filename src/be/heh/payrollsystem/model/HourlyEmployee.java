@@ -5,11 +5,12 @@ public class HourlyEmployee extends Employee{
     private double hourlyRate;
     private int hoursWorked;
 
-    public HourlyEmployee(String name, String id, double hourlyRate, int hoursWorked) {
-        super(name, id);
-        setHourlyRate(hourlyRate);
-        setHoursWorked(hoursWorked);
+    private HourlyEmployee(Builder builder) {
+        super(builder.name, builder.id);
+        setHourlyRate(builder.hourlyRate);
+        setHoursWorked(builder.hoursWorked);
     }
+
     @Override
     public double calculatePay() {
         return hourlyRate * hoursWorked;
@@ -30,5 +31,32 @@ public class HourlyEmployee extends Employee{
             throw new IllegalArgumentException("Le nombre d'heures ne peut pas être négatif.");
         }
         this.hoursWorked = hoursWorked;
+    }
+
+    public static class Builder {
+        protected String name;
+        protected String id;
+
+        protected double hourlyRate = 100.0;
+        protected int hoursWorked = 42;
+
+        public Builder(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public Builder setHourlyRate(double hourlyRate) {
+            this.hourlyRate = hourlyRate;
+            return this;
+        }
+
+        public Builder setHoursWorked(int hoursWorked) {
+            this.hoursWorked = hoursWorked;
+            return this;
+        }
+
+        public HourlyEmployee build() {
+            return new HourlyEmployee(this);
+        }
     }
 }

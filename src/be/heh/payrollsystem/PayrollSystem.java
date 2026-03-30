@@ -10,7 +10,9 @@ public class PayrollSystem {
 
     public static void main(String[] args) {
         Employee toto=
-                new HourlyEmployee("toto", "1234", 20, 8);
+                new HourlyEmployee.Builder("toto", "1234")
+                        .setHourlyRate(60.0)
+                        .build();
 
         try {
             Employee bob =
