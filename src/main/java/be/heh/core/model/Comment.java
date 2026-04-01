@@ -1,0 +1,19 @@
+package be.heh.core.model;
+
+public class Comment {
+    protected String author;
+    protected String text;
+
+    public Comment(String author, String text) {
+        this.author = author;
+        this.text = text;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getText() {
+        return text;
+    }
+}
